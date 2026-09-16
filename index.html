@@ -74,9 +74,12 @@
     <button class="clear" id="f-clear">Limpar filtros</button>
   </div>
 
-  <div class="result-count" id="result-count"></div>
+  <div class="table-toolbar">
+    <div class="result-count" id="result-count"></div>
+    <button type="button" id="btn-screenshot" class="icon-btn" title="Copiar imagem desta tabela (para colar no e-mail)">📷</button>
+  </div>
 
-  <div class="table-card">
+  <div class="table-card" id="table-card">
     <div id="view-ciclo"></div>
     <div id="view-rollout" style="display:none;"></div>
     <div id="view-semana" style="display:none;"></div>
@@ -85,6 +88,7 @@
 
 </main>
 
+<script src="html2canvas.min.js"></script>
 <script src="script.js"></script>
 
 </body>

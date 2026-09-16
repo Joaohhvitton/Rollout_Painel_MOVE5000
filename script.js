@@ -137,6 +137,16 @@
     if(n > 0) return '<span class="num-sug">+'+n.toLocaleString("pt-BR")+'</span>';
     return '<span class="num-zero">0</span>';
   }
+  function visPill(c){
+    // classificação por quantidade de desatualizados: farol + número único
+    const n = c.pend;
+    let cls, rotulo;
+    if(n === 0){ cls = "cls-ok"; rotulo = "Em dia"; }
+    else if(n <= 10){ cls = "cls-mid"; rotulo = "Atenção"; }
+    else { cls = "cls-bad"; rotulo = "Crítico"; }
+    return '<span class="cls-badge '+cls+'"><span class="cls-dot"></span>'
+      + n.toLocaleString("pt-BR") + ' · ' + rotulo + '</span>';
+  }
   function escapeHtml(s){
     return (s||"").toString().replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
   }
@@ -209,10 +219,11 @@
       + '<th>'+th2('Terminais','atualizados')+'</th>'
       + '<th>'+th2('Terminais','desatualizados')+'</th>'
       + '<th>'+th2('% Terminal','atualizado')+'</th>'
+      + (showSugCol ? '<th>'+th2('Classificação','desatualizados')+'</th>' : '')
       + (showSugCol ? '<th class="col-sug">'+th2('Sugestões','sem data')+'</th>' : '')
       + '</tr></thead><tbody>';
 
-    const colspan = showSugCol ? 6 : 5;
+    const colspan = showSugCol ? 7 : 5;
 
     dirs.forEach(dirName=>{
       const dirList = byDir[dirName];
@@ -222,8 +233,9 @@
         + '<td class="col-label"><span class="toggle-icon">'+(isOpen?"–":"+")+'</span>'+escapeHtml(dirName)+'</td>'
         + '<td>'+c.total.toLocaleString("pt-BR")+'</td>'
         + '<td>'+c.ok.toLocaleString("pt-BR")+'</td>'
-        + '<td>'+c.pend.toLocaleString("pt-BR")+'</td>'
+        + '<td>'+warnNum(c.pend)+'</td>'
         + '<td>'+pctPill(c.pct)+'</td>'
+        + (showSugCol ? '<td>'+visPill(c)+'</td>' : '')
         + (showSugCol ? '<td>'+sugNum(c.sug)+'</td>' : '')
         + '</tr>';
 
@@ -242,6 +254,7 @@
             + '<td>'+dc.ok.toLocaleString("pt-BR")+'</td>'
             + '<td>'+warnNum(dc.pend)+'</td>'
             + '<td>'+pctPill(dc.pct)+'</td>'
+            + (showSugCol ? '<td>'+visPill(dc)+'</td>' : '')
             + (showSugCol ? '<td>'+sugNum(dc.sug)+'</td>' : '')
             + '</tr>';
           if(dOpen){
@@ -256,8 +269,9 @@
     html += '<tr class="row-total"><td class="col-label">Total geral</td>'
       + '<td>'+total.total.toLocaleString("pt-BR")+'</td>'
       + '<td>'+total.ok.toLocaleString("pt-BR")+'</td>'
-      + '<td>'+total.pend.toLocaleString("pt-BR")+'</td>'
+      + '<td>'+warnNum(total.pend)+'</td>'
       + '<td>'+pctPill(total.pct)+'</td>'
+      + (showSugCol ? '<td>'+visPill(total)+'</td>' : '')
       + (showSugCol ? '<td>'+sugNum(total.sug)+'</td>' : '')
       + '</tr>';
 
@@ -379,7 +393,7 @@
         + '</td>'
         + '<td>'+wc.total.toLocaleString("pt-BR")+'</td>'
         + '<td>'+wc.ok.toLocaleString("pt-BR")+'</td>'
-        + '<td>'+wc.pend.toLocaleString("pt-BR")+'</td>'
+        + '<td>'+warnNum(wc.pend)+'</td>'
         + '<td>'+pctPill(wc.pct)+'</td>'
         + '</tr>';
 
@@ -410,7 +424,7 @@
     html += '<tr class="row-total"><td class="col-label">Total geral</td>'
       + '<td>'+total.total.toLocaleString("pt-BR")+'</td>'
       + '<td>'+total.ok.toLocaleString("pt-BR")+'</td>'
-      + '<td>'+total.pend.toLocaleString("pt-BR")+'</td>'
+      + '<td>'+warnNum(total.pend)+'</td>'
       + '<td>'+pctPill(total.pct)+'</td>'
       + '</tr>';
 
@@ -470,6 +484,58 @@
     document.getElementById("f-dir").value = "";
     document.getElementById("f-status").value = "";
     render();
+  });
+
+  document.getElementById("btn-screenshot").addEventListener("click", async ()=>{
+    const btn = document.getElementById("btn-screenshot");
+    const alvo = document.getElementById("table-card");
+    if(typeof html2canvas === "undefined"){
+      alert("Nao consegui carregar a biblioteca de captura (html2canvas.min.js). Confira se o arquivo esta na mesma pasta do index.html.");
+      return;
+    }
+    btn.classList.add("is-busy");
+    btn.textContent = "\u23f3";
+    try{
+      const canvas = await html2canvas(alvo, {
+        backgroundColor: "#ffffff",
+        scale: 2,
+        width: alvo.scrollWidth,
+        height: alvo.scrollHeight,
+        windowWidth: alvo.scrollWidth
+      });
+      canvas.toBlob(async (blob)=>{
+        let copiado = false;
+        try{
+          if(navigator.clipboard && window.ClipboardItem){
+            await navigator.clipboard.write([ new ClipboardItem({ "image/png": blob }) ]);
+            copiado = true;
+          }
+        } catch(e){ copiado = false; }
+
+        if(copiado){
+          btn.classList.remove("is-busy");
+          btn.classList.add("is-done");
+          btn.textContent = "\u2705";
+          setTimeout(()=>{ btn.classList.remove("is-done"); btn.textContent = "\ud83d\udcf7"; }, 2000);
+        } else {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "farol-move5000-" + new Date().toISOString().slice(0,10) + ".png";
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(url);
+          btn.classList.remove("is-busy");
+          btn.textContent = "\ud83d\udcf7";
+          alert("Seu navegador nao permite copiar imagem direto -- baixei o PNG pra voce anexar no e-mail.");
+        }
+      }, "image/png");
+    } catch(e){
+      btn.classList.remove("is-busy");
+      btn.textContent = "\ud83d\udcf7";
+      alert("Nao consegui gerar a imagem: " + e.message);
+    }
   });
 
   setStatusOptions();
