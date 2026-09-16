@@ -271,6 +271,7 @@
     font-size:12px;
     color:var(--ink-soft);
   }
+  .sug-note-inline{ color:var(--ink-soft); font-style:italic; font-size:11.3px; }
   .icon-btn{
     display:inline-flex;
     align-items:center;
@@ -290,7 +291,30 @@
   .icon-btn.is-busy{ opacity:.55; cursor:wait; }
   .icon-btn.is-done{ border-color:var(--green); background:var(--green-bg); }
 
-  /* ---------- Table card ---------- */
+  /* ---------------- Table card ---------------- */
+  .group-heading{
+    font-size:14px;
+    font-weight:800;
+    color:var(--red-dark);
+    margin:18px 0 8px;
+    padding-bottom:6px;
+    border-bottom:2px solid var(--red-dark);
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+  }
+  .group-heading:first-child{ margin-top:2px; }
+  .group-heading.group-sug{ color:var(--amber); border-bottom-color:var(--amber); }
+  .group-sub{ font-size:12px; font-weight:400; color:var(--ink-soft); }
+  .group-count{
+    margin-left:auto;
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--ink-soft);
+    background:var(--grey-bg);
+    padding:1px 9px;
+    border-radius:10px;
+  }
   .table-card{
     background:var(--card);
     border:1px solid var(--line);
@@ -305,7 +329,7 @@
   }
   .main-table thead th{
     text-align:right;
-    padding:8px 12px;
+    padding:7px 9px;
     background:#F7F7F8;
     border-bottom:2px solid var(--red-dark);
     white-space:nowrap;
@@ -339,7 +363,7 @@
     margin-top:1px;
   }
   .main-table tbody td{
-    padding:6px 12px;
+    padding:6px 9px;
     text-align:right;
     font-weight:700;
     border-bottom:1px solid var(--line);
@@ -407,6 +431,22 @@
   .warn-arrow{ color:var(--red-txt); font-size:11px; margin-left:3px; }
   .num-zero{ color:#B9BCC0; font-weight:400; }
   .num-sug{ color:var(--amber); font-weight:700; }
+  .num-ok{ color:var(--green); font-weight:700; }
+  .num-critical{ color:#7A1010; font-weight:800; }
+  .critical-icon{ font-size:11px; margin-left:3px; }
+  .tag-atual{
+    display:inline-block;
+    background:var(--blue-bg);
+    color:var(--blue);
+    font-size:10.5px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.3px;
+    padding:2px 7px;
+    border-radius:10px;
+    margin-left:8px;
+    vertical-align:middle;
+  }
   .cls-badge{
     display:inline-flex;
     align-items:center;
@@ -424,6 +464,12 @@
   .cls-mid .cls-dot{ background:var(--amber); }
   .cls-bad{ background:var(--red-bg); color:var(--red-txt); }
   .cls-bad .cls-dot{ background:var(--red-txt); }
+  .cls-badge.cls-compact{
+    padding:2px 7px;
+    gap:4px;
+    font-size:11.5px;
+    border-radius:10px;
+  }
 
   /* ---------- Detail (establishment) panel ---------- */
   tr.detail-row td{
@@ -470,6 +516,8 @@
   table.detail-table tbody tr.tr-priority:hover{ background:#F8DAD6; }
   table.detail-table tbody tr.tr-sug{ background:var(--amber-bg); }
   table.detail-table tbody tr.tr-sug:hover{ background:#FAEACB; }
+  table.detail-table tbody tr.tr-critical{ background:#F6D4D0; }
+  table.detail-table tbody tr.tr-critical:hover{ background:#F1BFB9; }
   .status-chip{
     display:inline-block;
     padding:2px 8px;
@@ -481,6 +529,8 @@
   .status-ok{ background:var(--green-bg); color:var(--green); }
   .status-pend{ background:var(--red-bg); color:var(--red-txt); }
   .status-sug{ background:var(--amber-bg); color:var(--amber); }
+  .status-crit{ background:#7A1010; color:#fff; }
+  .detail-count .crit-note{ color:#7A1010; font-weight:700; }
   .detail-empty{
     padding:16px;
     color:var(--ink-soft);

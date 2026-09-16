@@ -59,14 +59,17 @@
   </div>
 
   <div class="tabs">
-    <button class="tab-btn active" data-tab="ciclo">Farol do ciclo — Diretoria / DDD</button>
-    <button class="tab-btn" data-tab="rollout">Visão geral do rollout</button>
-    <button class="tab-btn" data-tab="semana">Visão por semana prevista</button>
+    <button class="tab-btn active" data-tab="semanal">Macro Semanal</button>
+    <button class="tab-btn" data-tab="geral">Macro Geral</button>
   </div>
 
   <div class="filters">
     <span class="filter-label">Buscar</span>
     <input type="text" id="f-search" placeholder="Estabelecimento, cidade, vendedor ou supervisor...">
+    <span id="f-semana-wrap">
+      <span class="filter-label">Semana</span>
+      <select id="f-semana"></select>
+    </span>
     <span class="filter-label">Diretoria</span>
     <select id="f-dir"><option value="">Todas</option></select>
     <span class="filter-label">Situação</span>
@@ -80,9 +83,8 @@
   </div>
 
   <div class="table-card" id="table-card">
-    <div id="view-ciclo"></div>
-    <div id="view-rollout" style="display:none;"></div>
-    <div id="view-semana" style="display:none;"></div>
+    <div id="view-semanal"></div>
+    <div id="view-geral" style="display:none;"></div>
   </div>
 
 
