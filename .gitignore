@@ -1,0 +1,18 @@
+# Nunca versionar os scripts locais nem nada que tenha credencial/dado interno.
+# Só os arquivos do painel (index.html, style.css, script.js, logo.png,
+# html2canvas.min.js) devem ser rastreados neste repositório.
+
+automacao_tms7.py
+rotina_versoes_tms7.py
+gerar_painel_atualizado.py
+ver_historico_versoes.py
+agendador_versoes_tms7.py
+cadastro_rollout_move5000.json
+template_painel_script.js
+
+*.bat
+*.db
+resumo_versoes_tms7.xlsx
+downloads/
+__pycache__/
+*.pyc
