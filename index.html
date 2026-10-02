@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rollout MOVE5000</title>
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32-removebg-preview.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600&display=swap">
+<link rel="stylesheet" href="style.css?v=4">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-row">
+    <div class="logo"><img src="logo.png" alt="redeFlex"></div>
+    <h1>Rollout MOVE5000</h1>
+    <span class="generated-at" id="updated-at"></span>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="semanal">Semana</button>
+    <button class="tab-btn" data-tab="geral">Geral</button>
+    <button class="tab-btn" data-tab="d1">Visitados D-1</button>
+  </nav>
+
+  <section class="summary">
+    <div class="sum-pct">
+      <span class="sum-pct-value" id="sum-pct">—</span>
+      <span class="sum-pct-label">atualizado</span>
+    </div>
+    <div class="sum-main">
+      <div class="sum-context" id="sum-context"></div>
+      <div class="sum-bar"><i id="sum-bar"></i></div>
+      <div class="figs">
+        <div class="fig"><b id="v-total">—</b><span id="l-total"></span></div>
+        <div class="fig fig-ok"><b id="v-ok">—</b><span>atualizados</span></div>
+        <div class="fig fig-pend"><b id="v-pend">—</b><span>pendentes</span></div>
+        <div class="fig fig-vis" id="fig-vis"><b id="v-vis">—</b><span>visitados sem atualizar</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="filters">
+    <input type="text" id="f-search" placeholder="Buscar estabelecimento, cidade, vendedor ou supervisor" aria-label="Buscar">
+    <span id="f-semana-wrap"><select id="f-semana" aria-label="Semana"></select></span>
+    <select id="f-dir" aria-label="Diretoria"><option value="">Todas as diretorias</option></select>
+    <select id="f-status" aria-label="Situação"></select>
+    <button class="clear" id="f-clear">Limpar</button>
+    <button type="button" id="btn-download" class="icon-btn" title="Baixar a base desta aba (Excel)" aria-label="Baixar a base desta aba">
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7.5 11 12 15.5 16.5 11"/><path d="M5 19.5h14"/></svg>
+    </button>
+    <button type="button" id="btn-screenshot" class="icon-btn" title="Copiar imagem da tabela" aria-label="Copiar imagem da tabela">
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+    </button>
+  </div>
+
+  <div class="table-card" id="table-card">
+    <div id="view-semanal"></div>
+    <div id="view-geral" style="display:none;"></div>
+    <div id="view-d1" style="display:none;"></div>
+  </div>
+
+</main>
+
+<script src="html2canvas.min.js"></script>
+<script src="script.js?v=4"></script>
+
+</body>
+</html>
